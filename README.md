@@ -1,7 +1,5 @@
 # SaaS Churn & Revenue Analytics Dashboard
 
-End-to-end SaaS analytics project for a junior / mid-level Data Analyst portfolio.
-
 The project generates synthetic subscription data, loads it into PostgreSQL, calculates SaaS KPIs with SQL and Python, creates cohort retention and customer health segmentation, and displays the results in a dynamic Chart.js dashboard.
 
 ## Tech Stack
@@ -32,7 +30,7 @@ saas-churn-analytics/
 │   └── schema.sql
 ├── generate_data.py
 ├── analytics_summary.json
-├── .env.example
+├── .env
 ├── .gitignore
 ├── requirements.txt
 └── README.md
