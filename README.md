@@ -130,7 +130,3 @@ http://localhost:8000/dashboard/index.html
 ## Notes
 
 The dataset is synthetic. The customer health segments and churn flags are intended for analytics demonstration, not production-level churn prediction.
-
-## Portfolio Summary
-
-This project demonstrates SQL analytics, SaaS KPI design, PostgreSQL data modeling, Python data pipelines, cohort retention, customer segmentation, and dashboard storytelling.
