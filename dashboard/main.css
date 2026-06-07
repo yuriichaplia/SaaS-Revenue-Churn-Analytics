@@ -1,0 +1,1038 @@
+/* 
+  main.css
+  Clean report-style dashboard CSS
+  Based on the original dashboard structure, but simplified:
+  - one font across the whole project
+  - stable chart heights
+  - smaller side charts for MRR by plan and Churn by plan
+  - no repeated/conflicting layout blocks
+*/
+
+:root {
+  --font-main: Arial, Helvetica, sans-serif;
+
+  --bg: #f4f1e9;
+  --paper: #fffdf8;
+  --paper-alt: #f9f6ef;
+  --paper-strong: #eee7da;
+
+  --text: #22262b;
+  --muted: #6f716b;
+  --quiet: #98968d;
+
+  --line: #d7cfbf;
+  --line-dark: #b8ad9a;
+
+  --blue: #253f5c;
+  --green: #3e6655;
+  --brown: #916140;
+  --ochre: #947637;
+  --red: #9c5047;
+  --slate: #5a6570;
+  --teal: #3b6d70;
+
+  --blue-soft: rgba(37, 63, 92, 0.08);
+  --green-soft: rgba(62, 102, 85, 0.10);
+  --red-soft: rgba(156, 80, 71, 0.10);
+  --ochre-soft: rgba(148, 118, 55, 0.12);
+
+  --radius: 8px;
+  --radius-sm: 4px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  font-size: 14px;
+  line-height: 1.52;
+}
+
+button,
+input,
+select,
+textarea,
+code,
+.mono,
+.eyebrow,
+.header-sub,
+.card-tag,
+.section-label,
+.toolbar-label,
+.filter-group > span,
+.mini-kpi-label,
+.kpi-lbl,
+.note-box span,
+.data-table th,
+.tbl th,
+.cohort-tbl,
+.cohort-tbl th {
+  font-family: var(--font-main);
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Shared page width */
+
+.report-shell,
+.header,
+.toolbar,
+.main,
+.footer {
+  width: min(1240px, calc(100% - 48px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Report-layout header */
+
+.report-shell {
+  padding: 32px 0 42px;
+}
+
+.report-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+  gap: 32px;
+  align-items: end;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 7px;
+  font-size: 11px;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+}
+
+.report-header h1,
+.header-title {
+  margin: 0;
+  max-width: 780px;
+  color: var(--text);
+  font-size: clamp(38px, 5vw, 68px);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.report-subtitle {
+  margin: 12px 0 0;
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.report-meta {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.report-meta span {
+  padding: 8px 10px;
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+/* Old-header compatibility */
+
+.header {
+  padding: 30px 0 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  background: transparent;
+  border: none;
+  position: static;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-sub {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.header-right {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 10px;
+}
+
+.header-stat {
+  min-width: 112px;
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.header-stat-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.header-stat-label {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.h-divider,
+.t-sep {
+  display: none;
+}
+
+/* Executive summary */
+
+.summary-panel {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+  gap: 18px;
+}
+
+.summary-copy,
+.summary-kpis,
+.report-card,
+.note-box,
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.summary-copy {
+  padding: 24px 26px;
+}
+
+.summary-copy h2,
+.section-heading h2,
+.report-card h2,
+.report-card h3,
+.card-title {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.summary-copy h2 {
+  font-size: 27px;
+  line-height: 1.1;
+}
+
+.summary-copy p {
+  margin: 12px 0 0;
+  max-width: 860px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+/* KPI summary */
+
+.summary-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.mini-kpi {
+  padding: 18px 18px 16px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.mini-kpi:nth-child(2n) {
+  border-right: none;
+}
+
+.mini-kpi:nth-last-child(-n + 2) {
+  border-bottom: none;
+}
+
+.mini-kpi-label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 10px;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.mini-kpi strong {
+  display: block;
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--blue);
+}
+
+/* Toolbar */
+
+.toolbar-row,
+.toolbar {
+  margin-top: 18px;
+  padding: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--paper-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.toolbar {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-group > span,
+.toolbar-label {
+  margin-right: 2px;
+  font-size: 10px;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.tbtn,
+.tab-btn {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.tbtn:hover,
+.tab-btn:hover {
+  background: #ffffff;
+  border-color: var(--line-dark);
+  color: var(--text);
+}
+
+.tbtn.active,
+.tab-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #ffffff;
+}
+
+/* Main layouts */
+
+.story-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 18px;
+}
+
+.main {
+  padding: 0 0 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.report-card,
+.card {
+  padding: 20px;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.card-heading,
+.table-header,
+.card-title {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.card-heading h2,
+.report-card h2,
+.report-card h3 {
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.card-heading p,
+.report-card > p,
+.card-tag {
+  margin: 5px 0 0;
+  color: var(--quiet);
+  font-size: 11px;
+}
+
+.card-title {
+  align-items: baseline;
+  font-size: 20px;
+}
+
+.side-notes {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.note-box {
+  padding: 16px;
+}
+
+.note-box span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 10px;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.note-box strong {
+  display: block;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+/* Sections */
+
+.section-block {
+  margin-top: 28px;
+}
+
+.section-heading {
+  margin-bottom: 12px;
+}
+
+.section-heading h2 {
+  font-size: 31px;
+  line-height: 1.1;
+}
+
+.section-label {
+  margin-bottom: 10px;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.two-column.uneven {
+  grid-template-columns: minmax(360px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.grid-2,
+.grid-3 {
+  display: grid;
+  gap: 18px;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: minmax(0, 1.6fr) minmax(340px, 0.9fr);
+}
+
+/* KPI grid if old structure is used */
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.kpi-cell {
+  padding: 19px 21px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.kpi-cell:nth-child(4n) {
+  border-right: none;
+}
+
+.kpi-cell:nth-last-child(-n + 4) {
+  border-bottom: none;
+}
+
+.kpi-cell.highlight {
+  background: var(--paper-alt);
+}
+
+.kpi-lbl {
+  margin-bottom: 7px;
+  font-size: 10px;
+  color: var(--quiet);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.kpi-val {
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.kpi-sub {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.kpi-tag,
+.badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: var(--radius-sm);
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.kpi-tag.up {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.kpi-tag.down {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.kpi-tag.neu {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.kpi-tag.warn {
+  background: var(--ochre-soft);
+  color: var(--ochre);
+}
+
+.badge {
+  background: var(--paper-strong);
+  color: var(--text);
+}
+
+/* Charts */
+
+canvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.chart-box,
+.mrr-chart-box,
+.plan-chart-box,
+.churn-chart-box {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chart-box canvas,
+.mrr-chart-box canvas,
+.plan-chart-box canvas,
+.churn-chart-box canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Main MRR / revenue trend */
+.hero-chart,
+.mrr-chart-box {
+  min-height: auto;
+}
+
+#revChart,
+#mrrChart {
+  height: 300px !important;
+  max-height: 300px !important;
+}
+
+/* Secondary charts */
+#newRepeatChart {
+  height: 240px !important;
+  max-height: 240px !important;
+}
+
+#catChart,
+#prodChart {
+  height: 260px !important;
+  max-height: 260px !important;
+}
+
+#regionChart {
+  height: 220px !important;
+  max-height: 220px !important;
+}
+
+#segChart {
+  height: 190px !important;
+  max-height: 190px !important;
+  margin-top: 14px;
+}
+
+/* Side-card charts: MRR by plan and Churn by plan */
+#planChart,
+#churnChart {
+  height: 180px !important;
+  max-height: 180px !important;
+}
+
+.plan-chart-box,
+.churn-chart-box {
+  height: 180px;
+  max-height: 180px;
+}
+
+.mrr-chart-box {
+  height: 300px;
+  max-height: 300px;
+}
+
+/* Tables */
+
+.data-table,
+.tbl,
+.cohort-tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td,
+.tbl th,
+.tbl td {
+  padding: 10px 11px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.data-table th,
+.tbl th {
+  background: var(--paper-alt);
+  color: var(--quiet);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.data-table td,
+.tbl td {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.data-table tr:last-child td,
+.tbl tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover td,
+.tbl tbody tr:hover td {
+  background: #fff9ef;
+}
+
+.mono {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Segments */
+
+.seg-list,
+#segList {
+  display: flex;
+  flex-direction: column;
+}
+
+.seg-row {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.seg-row:last-child {
+  border-bottom: none;
+}
+
+.seg-swatch {
+  width: 4px;
+  height: 44px;
+  border-radius: 4px;
+}
+
+.seg-body {
+  min-width: 0;
+}
+
+.seg-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.seg-meta {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.seg-bar-track {
+  height: 4px;
+  margin-top: 8px;
+  border-radius: 4px;
+  background: var(--paper-strong);
+  overflow: hidden;
+}
+
+.seg-bar-fill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.seg-right {
+  min-width: 110px;
+  text-align: right;
+}
+
+.seg-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.seg-count {
+  margin-top: 1px;
+  font-size: 11px;
+  color: var(--quiet);
+}
+
+/* Cohort */
+
+.cohort-wrap {
+  overflow-x: auto;
+}
+
+.cohort-tbl {
+  min-width: 760px;
+  font-size: 11px;
+}
+
+.cohort-tbl th,
+.cohort-tbl td {
+  padding: 8px 9px;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.cohort-tbl th {
+  background: var(--paper-alt);
+  color: var(--quiet);
+  font-weight: 700;
+}
+
+.cohort-tbl th:first-child,
+.cohort-tbl td:first-child {
+  text-align: left;
+}
+
+/* Insights */
+
+.insight-list,
+.insight-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.insight-card {
+  padding: 16px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.insight-card.good {
+  border-left: 4px solid var(--green);
+}
+
+.insight-card.flagged {
+  border-left: 4px solid var(--red);
+}
+
+.insight-card.neutral {
+  border-left: 4px solid var(--blue);
+}
+
+.insight-head {
+  margin-bottom: 7px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.insight-body {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tab-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Footer */
+
+.report-footer,
+.footer {
+  margin-top: 30px;
+  padding-top: 18px;
+  padding-bottom: 34px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  color: var(--quiet);
+  font-size: 12px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+code {
+  padding: 1px 4px;
+  background: var(--paper-strong);
+  border-radius: 3px;
+  font-size: 0.92em;
+}
+
+/* Responsive */
+
+@media (max-width: 1100px) {
+  .report-header,
+  .summary-panel,
+  .story-grid,
+  .two-column,
+  .two-column.uneven,
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .side-notes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+  }
+
+  .header-right {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .report-shell,
+  .header,
+  .toolbar,
+  .main,
+  .footer {
+    width: min(100% - 32px, 1240px);
+  }
+
+  .report-shell {
+    padding-top: 24px;
+  }
+
+  .summary-kpis,
+  .kpi-row,
+  .header-right,
+  .side-notes,
+  .insight-list,
+  .insight-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mini-kpi,
+  .mini-kpi:nth-child(2n),
+  .mini-kpi:nth-last-child(-n + 2),
+  .kpi-cell,
+  .kpi-cell:nth-child(4n),
+  .kpi-cell:nth-last-child(-n + 4) {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .mini-kpi:last-child,
+  .kpi-cell:last-child {
+    border-bottom: none;
+  }
+
+  .toolbar-row {
+    align-items: flex-start;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .seg-row {
+    grid-template-columns: 4px 1fr;
+  }
+
+  .seg-right {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .report-header h1,
+  .header-title {
+    font-size: 42px;
+  }
+
+  #revChart,
+  #mrrChart {
+    height: 260px !important;
+    max-height: 260px !important;
+  }
+
+  #newRepeatChart,
+  #catChart,
+  #prodChart {
+    height: 230px !important;
+    max-height: 230px !important;
+  }
+
+  #regionChart,
+  #segChart {
+    height: 200px !important;
+    max-height: 200px !important;
+  }
+
+  #planChart,
+  #churnChart,
+  .plan-chart-box,
+  .churn-chart-box {
+    height: 200px !important;
+    max-height: 200px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+
+  .report-header h1,
+  .header-title {
+    font-size: 36px;
+  }
+
+  .summary-copy,
+  .report-card,
+  .card {
+    padding: 16px;
+  }
+
+  .mini-kpi strong,
+  .note-box strong,
+  .kpi-val {
+    font-size: 28px;
+  }
+
+  .card-heading,
+  .table-header,
+  .card-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #revChart,
+  #mrrChart,
+  #newRepeatChart,
+  #catChart,
+  #prodChart,
+  #regionChart,
+  #segChart {
+    height: 220px !important;
+    max-height: 220px !important;
+  }
+
+  #planChart,
+  #churnChart,
+  .plan-chart-box,
+  .churn-chart-box {
+    height: 190px !important;
+    max-height: 190px !important;
+  }
+}

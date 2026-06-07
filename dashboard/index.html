@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaaS Revenue & Churn Analytics</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="main.css"/>
+</head>
+<body>
+  <main class="report-shell">
+    <header class="report-header">
+      <div>
+        <p class="eyebrow">SaaS Analytics Project</p>
+        <h1>Subscription revenue and churn report</h1>
+        <p class="report-subtitle">Synthetic SaaS dataset · PostgreSQL pipeline · 2022–2024</p>
+      </div>
+      <div class="report-meta">
+        <span>Data source: analytics_summary.json</span>
+        <span>Revenue based on paid subscription payments</span>
+      </div>
+    </header>
+
+    <section class="summary-panel">
+      <div class="summary-copy">
+        <h2>Executive summary</h2>
+        <p id="executiveSummary">Loading summary...</p>
+      </div>
+      <div class="summary-kpis">
+        <div class="mini-kpi"><span class="mini-kpi-label">Current MRR</span><strong id="kpiMrr">—</strong></div>
+        <div class="mini-kpi"><span class="mini-kpi-label">ARR</span><strong id="kpiArr">—</strong></div>
+        <div class="mini-kpi"><span class="mini-kpi-label">Churn rate</span><strong id="kpiChurn">—</strong></div>
+        <div class="mini-kpi"><span class="mini-kpi-label">ARPU</span><strong id="kpiArpu">—</strong></div>
+      </div>
+    </section>
+
+    <section class="story-grid">
+      <article class="report-card hero-chart">
+        <div class="card-heading">
+          <div>
+            <h2>MRR trend</h2>
+            <p>Monthly recurring revenue by subscription month</p>
+          </div>
+        </div>
+        <div class="mrr-chart-box">
+          <canvas id="mrrChart"></canvas>
+        </div>
+      </article>
+
+      <aside class="side-notes">
+        <div class="note-box"><span>Total revenue</span><strong id="kpiRevenue">—</strong></div>
+        <div class="note-box"><span>Active customers</span><strong id="kpiActive">—</strong></div>
+        <div class="note-box"><span>High-risk customers</span><strong id="kpiRisk">—</strong></div>
+      </aside>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Revenue</p>
+        <h2>Plan and regional performance</h2>
+      </div>
+      <div class="two-column">
+        <article class="report-card">
+          <h3>MRR by plan</h3>
+          <canvas id="planChart"></canvas>
+        </article>
+        <article class="report-card">
+          <h3>Revenue by region</h3>
+          <canvas id="regionChart"></canvas>
+          <table class="data-table">
+            <thead><tr><th>Region</th><th>Revenue</th><th>Customers</th></tr></thead>
+            <tbody id="regionTbody"></tbody>
+          </table>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Churn</p>
+        <h2>Customer retention and risk</h2>
+      </div>
+      <div class="two-column uneven">
+        <article class="report-card">
+          <h3>Churn by plan</h3>
+          <canvas id="churnChart"></canvas>
+        </article>
+        <article class="report-card">
+          <h3>Cohort retention</h3>
+          <div class="cohort-wrap">
+            <table class="cohort-tbl" id="cohortTable"></table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Customers</p>
+        <h2>Customer health segments</h2>
+      </div>
+      <div class="two-column">
+        <article class="report-card">
+          <h3>Segments</h3>
+          <div id="segList"></div>
+          <canvas id="segChart"></canvas>
+        </article>
+        <article class="report-card">
+          <h3>High-risk accounts</h3>
+          <table class="data-table" id="riskTable"></table>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="section-heading">
+        <p class="eyebrow">Analyst notes</p>
+        <h2>Key takeaways</h2>
+      </div>
+      <div class="insight-list" id="insightGrid"></div>
+    </section>
+
+    <footer class="report-footer">
+      <span>PostgreSQL · Python · SQL · pandas · scikit-learn · Chart.js</span>
+      <span>Reference month: 2024-12</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
