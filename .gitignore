@@ -7,3 +7,4 @@ venv/
 .ipynb_checkpoints/
 output_charts/
 output_csv/
+analytics_summary.json
